@@ -9,6 +9,7 @@ import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { prisma } from "./db/prisma.js";
 import { logInRouter } from "./routes/logInRouter.js";
 import { logOutRouter } from "./routes/logOutRouter.js";
+import { folderRouter } from "./routes/folderRouter.js";
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/", indexRouter);
 app.use("/sign-up", signUpRouter)
 app.use("/log-in", logInRouter)
 app.use("/log-out", logOutRouter)
+app.use("/folders", folderRouter);
 
 app.listen(process.env.PORT || 8080, () => {
 	console.log("Server running");
