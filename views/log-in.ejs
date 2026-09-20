@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In</title>
+</head>
+<body>
+  <h1>Log In</h1>
+
+  <% if (locals.messages) { %>
+    <ul>
+      <% messages.forEach((message) => { %>
+        <li><%= message %></li>
+      <% }); %>
+    </ul>
+  <% } %>
+
+  <form action="/log-in" method="POST">
+    <label for="username">Username</label>
+    <input id="username" name="username" type="text" required />
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" required />
+
+    <button type="submit">Log In</button>
+  </form>
+
+  <a href="/sign-up">Don't have an account? Sign up</a>
+</body>
+</html>

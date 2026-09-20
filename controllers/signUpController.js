@@ -9,6 +9,7 @@ export function getSignUpForm(req, res) {
 export const validateSignUp = [
 	body("username")
 		.trim()
+		.toLowerCase()
 		.notEmpty()
 		.withMessage("Username is required")
 		.isLength({ max: 255 })

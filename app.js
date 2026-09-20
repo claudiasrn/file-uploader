@@ -7,6 +7,7 @@ import "./config/passport.js"
 import session from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { prisma } from "./db/prisma.js";
+import { logInRouter } from "./routes/logInRouter.js";
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use((req, res, next) => {
 
 app.use("/", indexRouter);
 app.use("/sign-up", signUpRouter)
+app.use("/log-in", logInRouter)
 
 app.listen(process.env.PORT || 8080, () => {
 	console.log("Server running");
