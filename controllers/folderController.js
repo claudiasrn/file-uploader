@@ -41,3 +41,18 @@ export async function postFolder(req, res, next) {
 
 	res.redirect("/");
 }
+
+export async function getFolder(req, res) {
+	const id = Number(req.params.id);
+
+	const folder = await prisma.folder.findFirst({
+		where: { id, userId: req.user.id },
+		include: { files: true },
+	});
+
+	if (!folder) {
+		return res.status(404).render("404");
+	}
+
+	res.render("folder", { folder });
+}

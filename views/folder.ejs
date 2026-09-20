@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= folder.name %></title>
+</head>
+<body>
+  <h1><%= folder.name %></h1>
+
+  <a href="/folders/<%= folder.id %>/edit">Rename</a>
+  <form action="/folders/<%= folder.id %>/delete" method="POST">
+    <button type="submit">Delete folder</button>
+  </form>
+
+  <h2>Files</h2>
+  <% if (folder.files.length === 0) { %>
+    <p>No files yet.</p>
+  <% } else { %>
+    <ul>
+      <% folder.files.forEach((file) => { %>
+        <li><a href="/files/<%= file.id %>"><%= file.name %></a></li>
+      <% }); %>
+    </ul>
+  <% } %>
+
+  <a href="/">Back</a>
+</body>
+</html>
