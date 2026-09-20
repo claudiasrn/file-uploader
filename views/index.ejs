@@ -1,12 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>File Uploader</title>
-	</head>
-	<body>
-		<h1>File Uploader</h1>
-		<a href="/sign-up">Sign up</a>
-	</body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Uploader</title>
+</head>
+<body>
+  <h1>File Uploader</h1>
+
+  <% if (currentUser) { %>
+    <p>Logged in as <%= currentUser.username %></p>
+    <form action="/log-out" method="POST">
+      <button type="submit">Log out</button>
+    </form>
+
+    <h2>Your folders</h2>
+    <% if (folders.length === 0) { %>
+      <p>No folders yet.</p>
+    <% } else { %>
+      <ul>
+        <% folders.forEach((folder) => { %>
+          <li><a href="/folders/<%= folder.id %>"><%= folder.name %></a></li>
+        <% }); %>
+      </ul>
+    <% } %>
+
+    <a href="/folders/new">New folder</a>
+  <% } else { %>
+    <a href="/log-in">Log in</a>
+    <a href="/sign-up">Sign up</a>
+  <% } %>
+</body>
 </html>
