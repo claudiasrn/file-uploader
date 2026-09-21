@@ -1,7 +1,7 @@
 import { prisma } from "../db/prisma.js";
 import { body, validationResult } from "express-validator";
 import { supabase } from "../db/supabase.js";
-import { parseDuration } from "../lib/duration.js";
+import { parseDuration } from "../lib/format.js";
 
 export function getNewFolderForm(req, res) {
 	res.render("folder-form");
