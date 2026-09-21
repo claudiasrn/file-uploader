@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { getShare } from "../controllers/shareController.js";
+import {
+	getShare,
+	downloadSharedFile,
+} from "../controllers/shareController.js";
 
 export const shareRouter = Router();
 
