@@ -1,4 +1,5 @@
 import { prisma } from "../db/prisma.js";
+import { supabase } from "../db/supabase.js";
 
 export async function getFile(req, res) {
 	const id = Number(req.params.id);
@@ -46,7 +47,6 @@ export async function deleteFile(req, res, next) {
 		return res.status(404).render("404");
 	}
 
-	await prisma.file.delete({ where: { id } });
 
 	const { error } = await supabase.storage
 		.from("uploads")
