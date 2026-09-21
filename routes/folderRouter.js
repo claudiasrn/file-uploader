@@ -8,7 +8,8 @@ import {
 	updateFolder,
 	deleteFolder,
 	getEditFolderForm,
-    uploadFile
+	uploadFile,
+	createShare,
 } from "../controllers/folderController.js";
 import { upload } from "../config/multer.js";
 
@@ -23,3 +24,4 @@ folderRouter.get("/:id/edit", getEditFolderForm);
 folderRouter.post("/:id/edit", validateFolder, updateFolder);
 folderRouter.post("/:id/delete", deleteFolder);
 folderRouter.post("/:id/upload", upload.single("file"), uploadFile);
+folderRouter.post("/:id/share", createShare);

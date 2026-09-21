@@ -27,6 +27,7 @@ model Folder {
   userId    Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   files     File[]
+  shares    Share[]
 
   @@unique([userId, name])
 }
@@ -49,4 +50,12 @@ model Session {
   sid       String   @unique
   data      String
   expiresAt DateTime
+}
+
+model Share {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  expiresAt DateTime
+  folderId  Int
+  folder    Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
 }

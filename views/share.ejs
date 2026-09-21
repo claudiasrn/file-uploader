@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= share.folder.name %></title>
+</head>
+<body>
+  <h1><%= share.folder.name %></h1>
+  <p>Shared folder — read only.</p>
+
+  <% if (share.folder.files.length === 0) { %>
+    <p>This folder is empty.</p>
+  <% } else { %>
+    <ul>
+      <% share.folder.files.forEach((file) => { %>
+        <li>
+          <%= file.name %> (<%= formatSize(file.size) %>)
+          <a href="/share/<%= share.token %>/files/<%= file.id %>">Download</a>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+</body>
+</html>

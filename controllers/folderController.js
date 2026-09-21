@@ -1,6 +1,7 @@
 import { prisma } from "../db/prisma.js";
 import { body, validationResult } from "express-validator";
 import { supabase } from "../db/supabase.js";
+import { parseDuration } from "../lib/duration.js";
 
 export function getNewFolderForm(req, res) {
 	res.render("folder-form");
@@ -162,4 +163,34 @@ export async function uploadFile(req, res, next) {
 	});
 
 	res.redirect(`/folders/${folderId}`);
+}
+
+export async function createShare(req, res) {
+	const id = Number(req.params.id);
+
+	const folder = await prisma.folder.findFirst({
+		where: { id, userId: req.user.id },
+	});
+
+	if (!folder) {
+		return res.status(404).render("404");
+	}
+
+	const expiresAt = parseDuration(req.body.duration ?? "");
+
+	if (!expiresAt) {
+		return res.status(400).render("error", {
+			message: "Invalid duration. Use a format like 7d, 12h or 2w.",
+		});
+	}
+
+	const share = await prisma.share.create({
+		data: {
+			token: crypto.randomUUID(),
+			expiresAt,
+			folderId: id,
+		},
+	});
+
+	res.render("share-created", { share, folder });
 }

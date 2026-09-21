@@ -13,6 +13,7 @@ import { folderRouter } from "./routes/folderRouter.js";
 import { fileRouter } from "./routes/fileRouter.js";
 import { formatSize } from "./lib/format.js";
 import { MAX_FILE_SIZE } from "./config/multer.js";
+import { shareRouter } from "./routes/shareRouter.js";
 
 const app = express();
 
@@ -53,6 +54,11 @@ app.use("/log-in", logInRouter);
 app.use("/log-out", logOutRouter);
 app.use("/folders", folderRouter);
 app.use("/files", fileRouter);
+app.use("/share", shareRouter);
+
+app.use((req, res) => {
+	res.status(404).render("404");
+});
 
 app.use((err, req, res, next) => {
 	if (err.code === "LIMIT_FILE_SIZE") {
