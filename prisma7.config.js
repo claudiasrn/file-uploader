@@ -1,4 +1,6 @@
-process.loadEnvFile();
+try {
+	process.loadEnvFile();
+} catch {}
 import { defineConfig } from "prisma/config";
 
 export default defineConfig({
