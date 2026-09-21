@@ -1,17 +1,21 @@
 import path from "node:path";
 import express from "express";
-import { indexRouter } from "./routes/indexRouter.js";
+import { indexRouter } from "./routes/indexRouter.js";
 import { signUpRouter } from "./routes/signUpRouter.js";
 import passport from "passport";
-import "./config/passport.js"
+import "./config/passport.js";
 import session from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { prisma } from "./db/prisma.js";
 import { logInRouter } from "./routes/logInRouter.js";
 import { logOutRouter } from "./routes/logOutRouter.js";
 import { folderRouter } from "./routes/folderRouter.js";
+import { fileRouter } from "./routes/fileRouter.js";
+import { formatSize } from "./lib/format.js";
 
 const app = express();
+
+app.locals.formatSize = formatSize;
 
 app.set("views", path.join(import.meta.dirname, "views"));
 app.set("view engine", "ejs");
@@ -42,10 +46,11 @@ app.use((req, res, next) => {
 });
 
 app.use("/", indexRouter);
-app.use("/sign-up", signUpRouter)
-app.use("/log-in", logInRouter)
-app.use("/log-out", logOutRouter)
+app.use("/sign-up", signUpRouter);
+app.use("/log-in", logInRouter);
+app.use("/log-out", logOutRouter);
 app.use("/folders", folderRouter);
+app.use("/files", fileRouter);
 
 app.listen(process.env.PORT || 8080, () => {
 	console.log("Server running");
