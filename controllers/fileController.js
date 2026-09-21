@@ -1,5 +1,4 @@
 import { prisma } from "../db/prisma.js";
-import fs from "node:fs/promises";
 
 export async function getFile(req, res) {
 	const id = Number(req.params.id);
@@ -16,7 +15,7 @@ export async function getFile(req, res) {
 	res.render("file", { file });
 }
 
-export async function downloadFile(req, res) {
+export async function downloadFile(req, res, next) {
 	const id = Number(req.params.id);
 
 	const file = await prisma.file.findFirst({
@@ -27,7 +26,13 @@ export async function downloadFile(req, res) {
 		return res.status(404).render("404");
 	}
 
-	res.download(file.storageKey, file.name);
+	const { data, error } = await supabase.storage
+		.from("uploads")
+		.createSignedUrl(file.storageKey, 60, { download: file.name });
+
+	if (error) return next(error);
+
+	res.redirect(data.signedUrl);
 }
 
 export async function deleteFile(req, res, next) {
@@ -43,11 +48,13 @@ export async function deleteFile(req, res, next) {
 
 	await prisma.file.delete({ where: { id } });
 
-	try {
-		await fs.unlink(file.storageKey);
-	} catch (err) {
-		if (err.code !== "ENOENT") return next(err);
-	}
+	const { error } = await supabase.storage
+		.from("uploads")
+		.remove([file.storageKey]);
+
+	if (error) return next(error);
+
+	await prisma.file.delete({ where: { id } });
 
 	res.redirect(`/folders/${file.folderId}`);
 }
