@@ -8,28 +8,36 @@
   <title><%= folder.name %></title>
 </head>
 <body>
-  <h1><%= folder.name %></h1>
-
-  <a href="/folders/<%= folder.id %>/edit">Rename</a>
-  <form action="/folders/<%= folder.id %>/delete" method="POST">
-    <button type="submit">Delete folder</button>
-  </form>
+  <div class="topbar">
+    <h1><%= folder.name %></h1>
+    <div class="actions">
+      <a href="/folders/<%= folder.id %>/edit" class="btn btn-secondary btn-sm">Rename</a>
+      <form action="/folders/<%= folder.id %>/delete" method="POST" class="inline">
+        <button type="submit" class="btn-danger btn-sm">Delete folder</button>
+      </form>
+    </div>
+  </div>
 
   <form action="/folders/<%= folder.id %>/upload" method="POST" enctype="multipart/form-data">
-    <label for="file">Upload a file</label>
-    <input id="file" name="file" type="file" required /><small>Max<%= formatSize(maxFileSize) %></small>
+    <div class="field">
+      <label for="file">Upload a file</label>
+      <input id="file" name="file" type="file" required />
+      <small>Max<%= formatSize(maxFileSize) %></small>
+    </div>
     <button type="submit">Upload</button>
   </form>
 
   <form action="/folders/<%= folder.id %>/share" method="POST">
-    <label for="duration">Share for</label>
-    <input id="duration" name="duration" type="text" placeholder="7d" required />
-    <button type="submit">Create link</button>
+    <div class="field">
+      <label for="duration">Share for</label>
+      <input id="duration" name="duration" type="text" placeholder="7d" required />
+    </div>
+    <button type="submit" class="btn-secondary">Create link</button>
   </form>
 
   <h2>Files</h2>
 <% if (folder.files.length === 0) { %>
-    <p>No files yet.</p>
+    <p class="empty-state">No files yet.</p>
 <% } else { %>
     <ul>
 <% folder.files.forEach((file) => { %>
@@ -38,6 +46,6 @@
     </ul>
 <% } %>
 
-  <a href="/">Back</a>
+  <a href="/" class="back-link">← Back</a>
 </body>
 </html>

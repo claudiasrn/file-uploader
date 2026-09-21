@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/styles.css">
-        <link rel="icon" href="/favicon.svg">
+		<link rel="stylesheet" href="/styles.css" />
+		<link rel="icon" href="/favicon.svg" />
 		<title><%= file.name %></title>
 	</head>
 	<body>
@@ -21,12 +21,16 @@
 			<dd><%= file.createdAt.toLocaleString() %></dd>
 		</dl>
 
-		<a href="/files/<%= file.id %>/download">Download</a>
+		<div class="file-actions">
+			<a class="btn" href="/files/<%= file.id %>/download">Download</a>
 
-		<form action="/files/<%= file.id %>/delete" method="POST">
-			<button type="submit">Delete</button>
-		</form>
+			<form action="/files/<%= file.id %>/delete" method="POST" class="inline">
+				<button type="submit" class="btn-danger">Delete</button>
+			</form>
+		</div>
 
-		<a href="/folders/<%= file.folder.id %>">Back to <%= file.folder.name %></a>
+		<a href="/folders/<%= file.folder.id %>" class="back-link"
+			>← Back to <%= file.folder.name %></a
+		>
 	</body>
 </html>

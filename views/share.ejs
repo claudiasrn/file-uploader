@@ -9,16 +9,16 @@
 </head>
 <body>
   <h1><%= share.folder.name %></h1>
-  <p>Shared folder — read only.</p>
+  <p class="muted-text">Shared folder — read only.</p>
 
   <% if (share.folder.files.length === 0) { %>
-    <p>This folder is empty.</p>
+    <p class="empty-state">This folder is empty.</p>
   <% } else { %>
     <ul>
       <% share.folder.files.forEach((file) => { %>
         <li>
-          <%= file.name %> (<%= formatSize(file.size) %>)
-          <a href="/share/<%= share.token %>/files/<%= file.id %>">Download</a>
+          <span><%= file.name %> <small>(<%= formatSize(file.size) %>)</small></span>
+          <a class="btn btn-sm" href="/share/<%= share.token %>/files/<%= file.id %>">Download</a>
         </li>
       <% }); %>
     </ul>

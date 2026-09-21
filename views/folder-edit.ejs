@@ -10,21 +10,25 @@
 <body>
   <h1>Rename Folder</h1>
 
-  <% if (locals.errors) { %>
-    <ul>
-      <% errors.forEach((error) => { %>
-        <li><%= error.msg %></li>
-      <% }); %>
-    </ul>
-  <% } %>
+  <div class="form-card">
+    <% if (locals.errors) { %>
+      <ul class="error-list">
+        <% errors.forEach((error) => { %>
+          <li><%= error.msg %></li>
+        <% }); %>
+      </ul>
+    <% } %>
 
-  <form action="/folders/<%= folder.id %>/edit" method="POST">
-    <label for="name">Folder name</label>
-    <input id="name" name="name" type="text" value="<%= folder.name %>" required />
+    <form action="/folders/<%= folder.id %>/edit" method="POST">
+      <div class="field">
+        <label for="name">Folder name</label>
+        <input id="name" name="name" type="text" value="<%= folder.name %>" required />
+      </div>
 
-    <button type="submit">Save</button>
-  </form>
+      <button type="submit">Save</button>
+    </form>
+  </div>
 
-  <a href="/folders/<%= folder.id %>">Cancel</a>
+  <a href="/folders/<%= folder.id %>" class="back-link">← Cancel</a>
 </body>
 </html>

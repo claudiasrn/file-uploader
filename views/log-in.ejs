@@ -10,24 +10,30 @@
 <body>
   <h1>Log In</h1>
 
-  <% if (locals.messages) { %>
-    <ul>
-      <% messages.forEach((message) => { %>
-        <li><%= message %></li>
-      <% }); %>
-    </ul>
-  <% } %>
+  <div class="auth-card">
+    <% if (locals.messages) { %>
+      <ul class="message-list">
+        <% messages.forEach((message) => { %>
+          <li><%= message %></li>
+        <% }); %>
+      </ul>
+    <% } %>
 
-  <form action="/log-in" method="POST">
-    <label for="username">Username</label>
-    <input id="username" name="username" type="text" required />
+    <form action="/log-in" method="POST">
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" required />
+      </div>
 
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password" required />
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required />
+      </div>
 
-    <button type="submit">Log In</button>
-  </form>
+      <button type="submit">Log In</button>
+    </form>
 
-  <a href="/sign-up">Don't have an account? Sign up</a>
+    <p class="switch">Don't have an account? <a href="/sign-up">Sign up</a></p>
+  </div>
 </body>
 </html>

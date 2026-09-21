@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="icon" href="/favicon.svg">
-  <title>Share link</title>
-</head>
-<body>
-  <h1>Share link for <%= folder.name %></h1>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/styles.css" />
+		<link rel="icon" href="/favicon.svg" />
+		<title>Share link</title>
+	</head>
+	<body>
+		<h1>Share link for <%= folder.name %></h1>
 
-  <p>Anyone with this link can view the folder until
-     <%= share.expiresAt.toLocaleString() %>.</p>
+		<div class="form-card">
+			<p class="muted-text">
+				Anyone with this link can view the folder until
+				<strong><%= share.expiresAt.toLocaleString() %></strong>.
+			</p>
 
-  <p><code>/share/<%= share.token %></code></p>
+			<code>/share/<%= share.token %></code>
+		</div>
 
-  <a href="/folders/<%= folder.id %>">Back to folder</a>
-</body>
+		<a href="/folders/<%= folder.id %>" class="back-link">← Back to folder</a>
+	</body>
 </html>

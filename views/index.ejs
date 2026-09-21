@@ -8,17 +8,20 @@
   <title>File Uploader</title>
 </head>
 <body>
-  <h1>File Uploader</h1>
-
   <% if (currentUser) { %>
-    <p>Logged in as <%= currentUser.username %></p>
-    <form action="/log-out" method="POST">
-      <button type="submit">Log out</button>
-    </form>
+    <div class="topbar">
+      <h1>File Uploader</h1>
+      <div class="actions">
+        <p class="muted-text">Logged in as <%= currentUser.username %></p>
+        <form action="/log-out" method="POST" class="inline">
+          <button type="submit" class="btn btn-secondary btn-sm">Log out</button>
+        </form>
+      </div>
+    </div>
 
     <h2>Your folders</h2>
     <% if (folders.length === 0) { %>
-      <p>No folders yet.</p>
+      <p class="empty-state">No folders yet.</p>
     <% } else { %>
       <ul>
         <% folders.forEach((folder) => { %>
@@ -27,10 +30,16 @@
       </ul>
     <% } %>
 
-    <a href="/folders/new">New folder</a>
+    <a href="/folders/new" class="btn mt-lg">New folder</a>
   <% } else { %>
-    <a href="/log-in">Log in</a>
-    <a href="/sign-up">Sign up</a>
+    <h1>File Uploader</h1>
+    <div class="auth-card">
+      <p class="muted-text mb-lg">Store and share your files securely.</p>
+      <div class="file-actions">
+        <a href="/log-in" class="btn">Log in</a>
+        <a href="/sign-up" class="btn btn-secondary">Sign up</a>
+      </div>
+    </div>
   <% } %>
 </body>
 </html>

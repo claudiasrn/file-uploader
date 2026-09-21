@@ -10,26 +10,36 @@
 <body>
   <h1>Sign Up</h1>
 
-  <% if (locals.errors) { %>
-    <ul>
-      <% errors.forEach((error) => { %>
-        <li><%= error.msg %></li>
-      <% }); %>
-    </ul>
-  <% } %>
+  <div class="auth-card">
+    <% if (locals.errors) { %>
+      <ul class="error-list">
+        <% errors.forEach((error) => { %>
+          <li><%= error.msg %></li>
+        <% }); %>
+      </ul>
+    <% } %>
 
-  <form action="/sign-up" method="POST">
-    <label for="username">Username</label>
-    <input id="username" name="username" type="text"
-           value="<%= locals.user ? user.username : '' %>" required />
+    <form action="/sign-up" method="POST">
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text"
+               value="<%= locals.user ? user.username : '' %>" required />
+      </div>
 
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password" required />
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required />
+      </div>
 
-    <label for="confirm_password">Confirm password</label>
-    <input id="confirm_password" name="confirm_password" type="password" required />
+      <div class="field">
+        <label for="confirm_password">Confirm password</label>
+        <input id="confirm_password" name="confirm_password" type="password" required />
+      </div>
 
-    <button type="submit">Sign Up</button>
-  </form>
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <p class="switch">Already have an account? <a href="/log-in">Log in</a></p>
+  </div>
 </body>
 </html>
