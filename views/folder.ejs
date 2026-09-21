@@ -13,16 +13,22 @@
     <button type="submit">Delete folder</button>
   </form>
 
+  <form action="/folders/<%= folder.id %>/upload" method="POST" enctype="multipart/form-data">
+    <label for="file">Upload a file</label>
+    <input id="file" name="file" type="file" required />
+    <button type="submit">Upload</button>
+  </form>
+
   <h2>Files</h2>
-  <% if (folder.files.length === 0) { %>
+<% if (folder.files.length === 0) { %>
     <p>No files yet.</p>
-  <% } else { %>
+<% } else { %>
     <ul>
-      <% folder.files.forEach((file) => { %>
+<% folder.files.forEach((file) => { %>
         <li><a href="/files/<%= file.id %>"><%= file.name %></a></li>
-      <% }); %>
+<% }); %>
     </ul>
-  <% } %>
+<% } %>
 
   <a href="/">Back</a>
 </body>

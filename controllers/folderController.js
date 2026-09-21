@@ -118,3 +118,28 @@ export async function deleteFolder(req, res, next) {
 
 	res.redirect("/");
 }
+
+export async function uploadFile(req, res) {
+	const folderId = Number(req.params.id);
+
+	const folder = await prisma.folder.findFirst({
+		where: { id: folderId, userId: req.user.id },
+	});
+
+	if (!folder) {
+		return res.status(404).render("404");
+	}
+
+	await prisma.file.create({
+		data: {
+			name: req.file.originalname,
+			size: req.file.size,
+			mimetype: req.file.mimetype,
+			storageKey: req.file.path,
+			folderId,
+			userId: req.user.id,
+		},
+	});
+
+	res.redirect(`/folders/${folderId}`);
+}

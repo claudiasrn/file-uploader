@@ -8,7 +8,9 @@ import {
 	updateFolder,
 	deleteFolder,
 	getEditFolderForm,
+    uploadFile
 } from "../controllers/folderController.js";
+import { upload } from "../config/multer.js";
 
 export const folderRouter = Router();
 
@@ -20,3 +22,4 @@ folderRouter.get("/:id", getFolder);
 folderRouter.get("/:id/edit", getEditFolderForm);
 folderRouter.post("/:id/edit", validateFolder, updateFolder);
 folderRouter.post("/:id/delete", deleteFolder);
+folderRouter.post("/:id/upload", upload.single("file"), uploadFile);
