@@ -56,3 +56,65 @@ export async function getFolder(req, res) {
 
 	res.render("folder", { folder });
 }
+
+export async function getEditFolderForm(req, res) {
+	const id = Number(req.params.id);
+
+	const folder = await prisma.folder.findFirst({
+		where: { id, userId: req.user.id },
+	});
+
+	if (!folder) {
+		return res.status(404).render("404");
+	}
+
+	res.render("folder-edit", { folder });
+}
+
+export async function updateFolder(req, res, next) {
+	const id = Number(req.params.id);
+	const errors = validationResult(req);
+	const { name } = req.body;
+
+	if (!errors.isEmpty()) {
+		return res.status(400).render("folder-edit", {
+			folder: { id, name },
+			errors: errors.array(),
+		});
+	}
+
+	try {
+		const result = await prisma.folder.updateMany({
+			where: { id, userId: req.user.id },
+			data: { name },
+		});
+
+		if (result.count === 0) {
+			return res.status(404).render("404");
+		}
+	} catch (err) {
+		if (err.code === "P2002") {
+			return res.status(400).render("folder-edit", {
+				folder: { id, name },
+				errors: [{ msg: "You already have a folder with this name" }],
+			});
+		}
+		return next(err);
+	}
+
+	res.redirect(`/folders/${id}`);
+}
+
+export async function deleteFolder(req, res, next) {
+	const id = Number(req.params.id);
+
+	const result = await prisma.folder.deleteMany({
+		where: { id, userId: req.user.id },
+	});
+
+	if (result.count === 0) {
+		return res.status(404).render("404");
+	}
+
+	res.redirect("/");
+}
