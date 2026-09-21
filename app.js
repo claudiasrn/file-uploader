@@ -12,10 +12,12 @@ import { logOutRouter } from "./routes/logOutRouter.js";
 import { folderRouter } from "./routes/folderRouter.js";
 import { fileRouter } from "./routes/fileRouter.js";
 import { formatSize } from "./lib/format.js";
+import { MAX_FILE_SIZE } from "./config/multer.js";
 
 const app = express();
 
 app.locals.formatSize = formatSize;
+app.locals.maxFileSize = MAX_FILE_SIZE;
 
 app.set("views", path.join(import.meta.dirname, "views"));
 app.set("view engine", "ejs");
@@ -51,6 +53,17 @@ app.use("/log-in", logInRouter);
 app.use("/log-out", logOutRouter);
 app.use("/folders", folderRouter);
 app.use("/files", fileRouter);
+
+app.use((err, req, res, next) => {
+	if (err.code === "LIMIT_FILE_SIZE") {
+		return res.status(400).render("error", {
+			message: `File is too large. Maximum size is ${formatSize(MAX_FILE_SIZE)}.`,
+		});
+	}
+
+	console.error(err);
+	res.status(500).render("error", { message: "Something went wrong." });
+});
 
 app.listen(process.env.PORT || 8080, () => {
 	console.log("Server running");
